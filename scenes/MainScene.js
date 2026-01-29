@@ -3,7 +3,7 @@ import BurgerMenu from '@gks/ui/BurgerMenu.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'Template_Main' });
+        super({ key: 'Verliebte_Main' });
     }
 
     create() {
@@ -43,7 +43,7 @@ export default class MainScene extends Phaser.Scene {
         }).setOrigin(0.5).setInteractive({ cursor: 'pointer' });
 
         winBtn.on('pointerdown', () => {
-            this.scene.start('Template_End');
+            this.scene.start('Verliebte_End');
         });
     }
 }
