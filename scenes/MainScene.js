@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import BurgerMenu from '@gks/ui/BurgerMenu.js';
+import PopupManager from '../../../platform/ui/PopupManager.js';
+import ProgressionManager from '../systems/ProgressionManager.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -9,6 +11,11 @@ export default class MainScene extends Phaser.Scene {
     create() {
         const cw = this.cameras.main.width;
         const ch = this.cameras.main.height;
+
+        // --- 0. SYSTEMS ---
+        this.popupManager = new PopupManager(this);
+        this.progression = new ProgressionManager();
+        this.progression.init();
 
         // --- LOCALIZATION CHECK ---
         // Games MUST support 'en' and 'de'.
