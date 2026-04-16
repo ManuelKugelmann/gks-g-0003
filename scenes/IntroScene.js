@@ -5,11 +5,11 @@ import MainScene from './MainScene';
 import EndScene from './EndScene';
 
 export const gameMeta = {
-    sceneKey: 'VerliebteHerzen',
+    sceneKey: 'VerliebteZahlen',
     previewImage: cardImg,
     title: {
-        en: "Verliebte Herzen",
-        de: "Verliebte Herzen"
+        en: "Matching Numbers",
+        de: "Verliebte Zahlen"
     },
     description: {
         en: "Find the matching hearts.",
@@ -21,7 +21,7 @@ export const gameMeta = {
 
 export default class IntroScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'VerliebteHerzen' });
+        super({ key: 'VerliebteZahlen' });
     }
 
     create() {
@@ -38,7 +38,7 @@ export default class IntroScene extends Phaser.Scene {
         // --- 2. INTRO VISUALS ---
         this.add.rectangle(cw / 2, ch / 2, cw, ch, 0xE91E63); // Pinkish for hearts
 
-        const welcomeText = lang === 'de' ? "Verliebte Herzen" : "Matching Hearts";
+        const welcomeText = lang === 'de' ? "Verliebte Zahlen" : "Matching Numbers";
         this.add.text(cw / 2, ch / 2, welcomeText, {
             fontSize: '48px',
             color: '#ffffff',
