@@ -1,0 +1,17 @@
+{
+    "name": "gks-g-0003 (Verliebte Zahlen)",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+    "postCreateCommand": "npm install",
+    "forwardPorts": [8080],
+    "portsAttributes": {
+        "8080": {
+            "label": "vite-dev",
+            "onAutoForward": "openPreview"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": ["dbaeumer.vscode-eslint"]
+        }
+    }
+}
