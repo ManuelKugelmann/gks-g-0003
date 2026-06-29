@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import BurgerMenu from '@gks/ui/BurgerMenu.js';
+import BurgerMenu from '@gks/sdk/ui/BurgerMenu.js';
 import cardImg from '../assets/card_preview.png';
 import MainScene from './MainScene';
 import EndScene from './EndScene';
