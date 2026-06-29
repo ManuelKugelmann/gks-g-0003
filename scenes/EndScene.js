@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
+import { SCENE_KEYS } from './keys.js';
 
 export default class EndScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'Verliebte_End' });
+        super({ key: SCENE_KEYS.END });
     }
 
     create() {
@@ -31,7 +32,7 @@ export default class EndScene extends Phaser.Scene {
         }).setOrigin(0.5);
 
         btn.on('pointerdown', () => {
-            this.scene.start('Verliebte_Main');
+            this.scene.start(SCENE_KEYS.MAIN);
         });
     }
 }

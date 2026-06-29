@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
 import BurgerMenu from '@gks/sdk/ui/BurgerMenu.js';
-import PopupManager from '../../../platform/ui/PopupManager.js';
+import PopupManager from '@gks/sdk/ui/PopupManager.js';
 import ProgressionManager from '../systems/ProgressionManager.js';
+import { SCENE_KEYS } from './keys.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'Verliebte_Main' });
+        super({ key: SCENE_KEYS.MAIN });
     }
 
     create() {
@@ -50,7 +51,7 @@ export default class MainScene extends Phaser.Scene {
         }).setOrigin(0.5).setInteractive({ cursor: 'pointer' });
 
         winBtn.on('pointerdown', () => {
-            this.scene.start('Verliebte_End');
+            this.scene.start(SCENE_KEYS.END);
         });
     }
 }

@@ -8,6 +8,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@gks/sdk": "git+https://github.com/ManuelKugelmann/gks_sdk.git#main",
         "phaser": "^3.80.0"
     },
     "devDependencies": {
