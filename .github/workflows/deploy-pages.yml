@@ -1,0 +1,70 @@
+name: Deploy to GitHub Pages
+
+# Builds the standalone game and publishes the static dist/ to GitHub Pages.
+# The game is pure client-side Phaser, so the Vite build is fully static.
+# vite.config.js sets `base: './'`, so it works at a project-site sub-path
+# (https://<user>.github.io/gks-g-0003/).
+#
+# The SDK is resolved from package.json: "@gks/sdk": "github:GuteKinderSpiele/gks_sdk#main".
+# `npm install` fetches it directly from GitHub — no sibling checkout needed.
+# If you pin a tag (e.g. #v0.1.0) in package.json, builds become reproducible.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; newer pushes cancel in-progress runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # gks_sdk is currently PRIVATE, so npm needs git auth to fetch it.
+      # Add a REPOSITORY secret GKS_SDK_TOKEN = a PAT with Contents:Read on gks_sdk.
+      # (Repo secret, not environment secret — this build job has no `environment:`.)
+      # npm normalizes GitHub git-deps to git+ssh:// in the lockfile, so we rewrite
+      # both https and ssh GitHub URLs to the token. When gks_sdk is made public,
+      # delete this step and the secret.
+      - name: Authenticate git for private SDK
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.GKS_SDK_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global --add url."https://x-access-token:${{ secrets.GKS_SDK_TOKEN }}@github.com/".insteadOf "ssh://git@github.com/"
+          git config --global --add url."https://x-access-token:${{ secrets.GKS_SDK_TOKEN }}@github.com/".insteadOf "git@github.com:"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install & build
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

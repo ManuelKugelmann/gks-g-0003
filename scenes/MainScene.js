@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import BurgerMenu from '@gks/ui/BurgerMenu.js';
+import BurgerMenu from '@gks/sdk/ui/BurgerMenu.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
