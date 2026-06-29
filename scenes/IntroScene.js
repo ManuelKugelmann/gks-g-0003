@@ -13,8 +13,8 @@ export const gameMeta = {
         de: "Verliebte Zahlen"
     },
     description: {
-        en: "Find the matching hearts.",
-        de: "Finde die zueinander passenden Herzen."
+        en: "Match the numbers that add up to ten.",
+        de: "Finde die Zahlen, die zusammen zehn ergeben."
     },
     context: ["math"], // Options: 'math', 'language', 'knowledge'
     difficulty: 1
