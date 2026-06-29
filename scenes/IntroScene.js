@@ -3,12 +3,13 @@ import BurgerMenu from '@gks/sdk/ui/BurgerMenu.js';
 import cardImg from '../assets/card_preview.png';
 import MainScene from './MainScene';
 import EndScene from './EndScene';
+import { SCENE_KEYS } from './keys.js';
 
 export const gameMeta = {
-    sceneKey: 'VerliebteZahlen',
+    sceneKey: SCENE_KEYS.INTRO,
     previewImage: cardImg,
     title: {
-        en: "Verliebte Zahlen",
+        en: "Matching Numbers",
         de: "Verliebte Zahlen"
     },
     description: {
@@ -21,7 +22,7 @@ export const gameMeta = {
 
 export default class IntroScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'VerliebteZahlen' });
+        super({ key: SCENE_KEYS.INTRO });
     }
 
     create() {
@@ -30,9 +31,9 @@ export default class IntroScene extends Phaser.Scene {
         const lang = this.registry.get('currentLanguage') || 'en';
 
         // --- 1. BOOTSTRAP SCENES ---
-        if (!this.scene.get('Verliebte_Main')) {
-            this.scene.add('Verliebte_Main', MainScene, false);
-            this.scene.add('Verliebte_End', EndScene, false);
+        if (!this.scene.get(SCENE_KEYS.MAIN)) {
+            this.scene.add(SCENE_KEYS.MAIN, MainScene, false);
+            this.scene.add(SCENE_KEYS.END, EndScene, false);
         }
 
         // --- 2. INTRO VISUALS ---
@@ -58,6 +59,11 @@ export default class IntroScene extends Phaser.Scene {
 
         this.tweens.add({ targets: startText, alpha: 1, duration: 800, yoyo: true, repeat: -1 });
 
-        this.input.on('pointerdown', () => this.scene.start('Verliebte_Main'));
+        // Tap anywhere to start — but ignore taps that land on UI (e.g. the burger
+        // menu), otherwise opening the menu would also jump straight into the game.
+        this.input.on('pointerdown', (pointer, currentlyOver) => {
+            if (currentlyOver.length > 0) return;
+            this.scene.start(SCENE_KEYS.MAIN);
+        });
     }
 }

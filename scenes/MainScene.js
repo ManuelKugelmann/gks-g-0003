@@ -1,14 +1,22 @@
 import Phaser from 'phaser';
 import BurgerMenu from '@gks/sdk/ui/BurgerMenu.js';
+import PopupManager from '@gks/sdk/ui/PopupManager.js';
+import ProgressionManager from '../systems/ProgressionManager.js';
+import { SCENE_KEYS } from './keys.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'Verliebte_Main' });
+        super({ key: SCENE_KEYS.MAIN });
     }
 
     create() {
         const cw = this.cameras.main.width;
         const ch = this.cameras.main.height;
+
+        // --- 0. SYSTEMS ---
+        this.popupManager = new PopupManager(this);
+        this.progression = new ProgressionManager();
+        this.progression.init();
 
         // --- LOCALIZATION CHECK ---
         // Games MUST support 'en' and 'de'.
@@ -43,7 +51,7 @@ export default class MainScene extends Phaser.Scene {
         }).setOrigin(0.5).setInteractive({ cursor: 'pointer' });
 
         winBtn.on('pointerdown', () => {
-            this.scene.start('Verliebte_End');
+            this.scene.start(SCENE_KEYS.END);
         });
     }
 }
